@@ -16,3 +16,63 @@ Prosimy o zastosowanie się do poniższych instrukcji:
 > **UWAGA** Na gałęzi "master" nie powinno być żadnych Twoich zmian.
 
 > Wszelkie niestosowanie się do instrukcji może skutować wykluczeniem z procesu rekrutacji.
+
+
+# Repository Info Provider
+
+## Usage
+###  Run with Docker
+To run this app You should use `git clone` command or download zip file with this project and extract it.
+
+After that open Command Line at project directory and build Docker image using this command:
+
+```
+docker build -t repo_info_provider_image .
+```
+Then run Docker container in interactive mode and include mapping port 8080 in Your container to port in Your machine:
+```
+docker run --name repo_info_provider -it -p 8080:8080 repo_info_provider_image 
+```
+
+To exit the created container use CTRL+C in interactive view in terminal.
+
+## API Endpoints
+
+#### Get repo info
+
+```http
+   GET /api/repositories/{owner}/{repositoryName}
+```
+
+| Parameter        | Type     | Description                                  |
+|:-----------------|:---------|:---------------------------------------------|
+| `owner`          | `String` | **Required**. Owner of the GitHub repository |
+| `repositoryName` | `String` | **Required**. Name of the GitHub repository  |
+
+
+## Demo
+#### Get repo info
+###### Request
+```http
+   GET localhost:8080/api/repositories/Control11/ticket-booking-app
+```
+###### Respond
+```json
+{
+    "fullName": "Control11/ticket-booking-app",
+    "description": "This application represents basic seat booking system for movies in cinema.",
+    "cloneUrL": "https://github.com/Control11/ticket-booking-app.git",
+    "stars": 0,
+    "createdAt": "2023-07-06T16:25:16Z"
+}
+```
+
+
+## Requirements and used tools
+Before any step make sure You have installed Docker on Your machine.
+
+- Docker
+- Java 17
+- Spring-Boot 3.1.2
+- Maven 3.8.6
+
