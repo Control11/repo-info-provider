@@ -22,13 +22,17 @@ Prosimy o zastosowanie się do poniższych instrukcji:
 
 ## Usage
 ###  Run with Docker
-To run this app You should use `git clone` command or download zip file with this project and extract it.
 
-After that open Command Line at project directory and build Docker image using this command:
+To run this app You should use `git clone` command or download zip file with this project and extract it. After that open Command Line at project directory and build application using this command:
+```bash
+mvn clean package
+```
 
+Next build Docker image using this command:
 ```
 docker build -t repo_info_provider_image .
 ```
+
 Then run Docker container in interactive mode and include mapping port 8080 in Your container to port in Your machine:
 ```
 docker run --name repo_info_provider -it -p 8080:8080 repo_info_provider_image 
