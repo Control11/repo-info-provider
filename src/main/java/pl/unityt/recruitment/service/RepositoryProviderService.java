@@ -1,10 +1,11 @@
 package pl.unityt.recruitment.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import pl.unityt.recruitment.dto.RepositoryDTO;
 import pl.unityt.recruitment.exception.RepositoryNotFoundException;
+import reactor.core.publisher.Mono;
 
 @Service
 public class RepositoryProviderService {
@@ -12,15 +13,16 @@ public class RepositoryProviderService {
     private final WebClient webClient;
 
     public RepositoryProviderService() {
-        this.webClient = WebClient.builder().baseUrl(API_URL).build();
+        this.webClient = WebClient.create(API_URL);
     }
 
-    public RepositoryDTO getRepository(String owner, String repositoryName) {
+    public Mono<RepositoryDTO> getRepository(String owner, String repositoryName) {
         String url = API_URL + "/repos/" + owner + "/" + repositoryName;
-        try {
-            return webClient.get().uri(url).retrieve().bodyToMono(RepositoryDTO.class).block();
-        } catch (WebClientResponseException.NotFound e) {
-            throw new RepositoryNotFoundException("Requested repository could not be found", e);
-        }
+        return webClient.get()
+                .uri(url)
+                .retrieve()
+                .onStatus(HttpStatus.NOT_FOUND::equals,
+                        response -> Mono.error(new RepositoryNotFoundException("Requested repository could not be found")))
+                .bodyToMono(RepositoryDTO.class);
     }
 }
