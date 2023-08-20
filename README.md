@@ -78,7 +78,7 @@ To exit the created container use CTRL+C in interactive view in terminal.
    GET localhost:8080/api/repositories/randomOwner/random-repo
 ```
 ###### Respond
-```
+```json
 {
     "status": 404,
     "error": "Not Found",
