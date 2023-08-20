@@ -1,6 +1,5 @@
 package pl.unityt.recruitment.controller;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -38,9 +37,9 @@ class RepositoriesControllerTest {
 
     @Test
     void shouldMakeCorrectRequest() throws Exception {
-        RepositoryDTO respond = new RepositoryDTO("fullName", "description", "http://cloneUrl", 0, createdAt);
+        RepositoryDTO response = new RepositoryDTO("fullName", "description", "http://cloneUrl", 0, createdAt);
 
-        when(repositoryProviderService.getRepository(eq(owner), eq(repositoryName))).thenReturn(respond);
+        when(repositoryProviderService.getRepository(eq(owner), eq(repositoryName))).thenReturn(response);
 
         mockMvc.perform(get("http://localhost/api/repositories/{owner}/{repositoryName}", owner, repositoryName)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -56,9 +55,9 @@ class RepositoriesControllerTest {
 
     @Test
     void shouldMakeCorrectRequestWithEmptyDescription() throws Exception {
-        RepositoryDTO respond = new RepositoryDTO("fullName", null, "http://cloneUrl", 0, createdAt);
+        RepositoryDTO response = new RepositoryDTO("fullName", null, "http://cloneUrl", 0, createdAt);
 
-        when(repositoryProviderService.getRepository(eq(owner), eq(repositoryName))).thenReturn(respond);
+        when(repositoryProviderService.getRepository(eq(owner), eq(repositoryName))).thenReturn(response);
 
         mockMvc.perform(get("http://localhost/api/repositories/{owner}/{repositoryName}", owner, repositoryName)
                         .contentType(MediaType.APPLICATION_JSON))

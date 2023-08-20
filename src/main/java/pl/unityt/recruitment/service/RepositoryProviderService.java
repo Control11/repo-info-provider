@@ -1,5 +1,6 @@
 package pl.unityt.recruitment.service;
 
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -8,16 +9,18 @@ import pl.unityt.recruitment.exception.RepositoryNotFoundException;
 import reactor.core.publisher.Mono;
 
 @Service
+@Setter
 public class RepositoryProviderService {
-    private static final String API_URL = "https://api.github.com";
+    private String apiUrl;
     private final WebClient webClient;
 
     public RepositoryProviderService() {
-        this.webClient = WebClient.create(API_URL);
+        this.webClient = WebClient.create();
+        this.apiUrl = "https://api.github.com";
     }
 
     public RepositoryDTO getRepository(String owner, String repositoryName) {
-        String url = API_URL + "/repos/" + owner + "/" + repositoryName;
+        String url = apiUrl + "/repos/" + owner + "/" + repositoryName;
         return webClient.get()
                 .uri(url)
                 .retrieve()
