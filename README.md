@@ -55,7 +55,7 @@ To exit the created container use CTRL+C in interactive view in terminal.
 
 
 ## Demo
-#### Get repo info
+#### 1. Get repo info
 ###### Request
 ```http
    GET localhost:8080/api/repositories/Control11/ticket-booking-app
@@ -68,6 +68,22 @@ To exit the created container use CTRL+C in interactive view in terminal.
     "cloneUrL": "https://github.com/Control11/ticket-booking-app.git",
     "stars": 0,
     "createdAt": "2023-07-06T16:25:16Z"
+}
+```
+<br>
+
+#### 2. Exception handling - Error 404 Not found
+###### Request (with non-existent user and repo)
+```http
+   GET localhost:8080/api/repositories/randomOwner/random-repo
+```
+###### Respond
+```
+{
+    "status": 404,
+    "error": "Not Found",
+    "message": "Requested repository could not be found",
+    "timestamp": "2023-08-20T12:34:16.5021904Z"
 }
 ```
 
