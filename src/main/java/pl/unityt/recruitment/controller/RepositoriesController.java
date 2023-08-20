@@ -18,7 +18,7 @@ public class RepositoriesController {
     }
 
     @GetMapping("/repositories/{owner}/{repositoryName}")
-    public Mono<RepositoryDTO> repositories(@PathVariable final String owner, @PathVariable final String repositoryName) {
+    public RepositoryDTO repositories(@PathVariable final String owner, @PathVariable final String repositoryName) {
         return repositoryProviderService.getRepository(owner, repositoryName);
     }
 

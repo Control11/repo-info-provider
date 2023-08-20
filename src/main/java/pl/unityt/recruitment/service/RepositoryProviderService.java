@@ -16,13 +16,14 @@ public class RepositoryProviderService {
         this.webClient = WebClient.create(API_URL);
     }
 
-    public Mono<RepositoryDTO> getRepository(String owner, String repositoryName) {
+    public RepositoryDTO getRepository(String owner, String repositoryName) {
         String url = API_URL + "/repos/" + owner + "/" + repositoryName;
         return webClient.get()
                 .uri(url)
                 .retrieve()
                 .onStatus(HttpStatus.NOT_FOUND::equals,
                         response -> Mono.error(new RepositoryNotFoundException("Requested repository could not be found")))
-                .bodyToMono(RepositoryDTO.class);
+                .bodyToMono(RepositoryDTO.class)
+                .block();
     }
 }
